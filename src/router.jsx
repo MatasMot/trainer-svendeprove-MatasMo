@@ -5,12 +5,12 @@ import Layout from "./Layout";
 
 import Home from "./pages/Home";
 import Login from "./pages/Login";
-import Register from "./pages/Register";
+// import Register from "./pages/Register";
 
 // import Users, {loader as usersLoader} from "./pages/Users";
-import Blog, {loader as blogLoader} from "./pages/Blog";
+import Classes, {loader as classesLoader} from "./pages/Classes";
 import Search, {loader as searchLoader} from "./pages/Search";
-// import SingleBlog, {loader as singleBlogLoader} from "./pages/SingleBlog"
+import SingleClass, {loader as singleClassLoader} from "./pages/SingleClass";
 // import MyComments, {loader as myCommentsLoader} from "./pages/MyComments";
 
 
@@ -20,11 +20,13 @@ export const router = createBrowserRouter(
             <Route index element={<Home />} />
             
             <Route path="login" element={<Login />} />
-            <Route path="register" element={<Register />} />
-            <Route path="blog" element={<Blog />} loader={blogLoader} />
+            <Route path="classes" element={<Classes />} loader={classesLoader} />
+            <Route path="class/:id" element={<SingleClass />} loader={singleClassLoader} />
+
             <Route path="search" element={<Search />} loader={searchLoader} />
             
             {/*
+            <Route path="register" element={<Register />} />
             <Route path="users" 
                 element = {
                     <ProtectedRoute>
@@ -41,7 +43,6 @@ export const router = createBrowserRouter(
                 } 
                 loader={myCommentsLoader} 
             />
-            <Route path="blog/:id" element={<SingleBlog />} loader={singleBlogLoader} />
             */}
         </Route>
     )

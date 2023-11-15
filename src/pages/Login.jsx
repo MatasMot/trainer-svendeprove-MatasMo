@@ -7,8 +7,8 @@ const Login = () => {
 
     const navigate = useNavigate();
     const schema = Yup.object().shape({
-        email: Yup.string().email("Please type a valid email!").required("Email is required!"),
-        password: Yup.string().min(6, "Password must be 6 characters long!").required("Password is required!")
+        username: Yup.string().min(5, "Username must be 5 characters long!").required("Username is required!"),
+        password: Yup.string().min(4, "Password must be 4 characters long!").required("Password is required!")
     })
 
 {/* initialValues is a prop
@@ -16,12 +16,12 @@ const Login = () => {
     return (
         <Formik
             initialValues={{
-                "email": "",
+                "username": "",
                 "password": ""
             }}
             validationSchema={schema}
             onSubmit = {async (values, { setStatus, setSubmitting }) => {
-                fetch("http://localhost:4000/login", {
+                fetch("http://localhost:4000/auth/token", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
@@ -43,7 +43,7 @@ const Login = () => {
                 .then(data => {
                     console.log(data);
                     Cookies.set("token", data.accessToken);
-                    Cookies.set("userId", data.user.id);
+                    Cookies.set("userId", data.id);
                     
                     navigate("/");
                 })
@@ -51,23 +51,23 @@ const Login = () => {
             }}
         >
             {({status}) => (
-            <Form>
-                <h1>LOGIN PAGE</h1>
-                <div className="flex gap-4">
-                    <label htmlFor="email">Email:</label>
-                    <Field id="email" name="email" type="email" />
-                    <ErrorMessage name="email" component="div" className="text-red-500"/>
-                </div>
-                <div className="flex gap-4">
-                    <label htmlFor="password">Password:</label>
-                    <Field id="password" name="password" type="password" />
-                    <ErrorMessage name="password" component="div" className="text-red-500"/>
-                </div>
-                {/*error from API*/}
-                {status && <p className="text-red-500">{status}</p>}
-                <button type="submit">Log In!</button>
-                <div><Link to="/register">Not yet a member? Register here</Link></div>
-            </Form>
+                <Form>
+                    <h1>LOGIN PAGE</h1>
+                    <div className="flex gap-4">
+                        <label htmlFor="username">Username:</label>
+                        <Field id="username" name="username" type="text" />
+                        <ErrorMessage name="username" component="div" className="text-red-500"/>
+                    </div>
+                    <div className="flex gap-4">
+                        <label htmlFor="password">Password:</label>
+                        <Field id="password" name="password" type="password" />
+                        <ErrorMessage name="password" component="div" className="text-red-500"/>
+                    </div>
+                    {/*error from API*/}
+                    {status && <p className="text-red-500">{status}</p>}
+                    <button type="submit">Log In!</button>
+                    <div><Link to="/register">Not yet a member? Register here</Link></div>
+                </Form>
             )}
         </Formik>
     );

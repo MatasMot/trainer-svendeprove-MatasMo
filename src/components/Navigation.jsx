@@ -33,7 +33,7 @@ const Navigation = () => {
                 <button onClick={hideMenu} className='absolute top-3 right-6 text-black text-[3rem] md:hidden'>&times;</button>
 
                 <Link to="/">Home</Link>
-                {/*<Link to="/blog">Blog</Link>*/}
+                <Link to="/classes">Classes</Link>
                 {/*token && (<Link to="/users">Users</Link>)*/}
                 {token ? <button onClick={handleLogout}>Log out</button> : <Link to="/login">Login</Link>}
             </nav>

@@ -1,7 +1,7 @@
 import { Route, createBrowserRouter, createRoutesFromElements } from "react-router-dom";
 import Layout from "./Layout";
 
-// import ProtectedRoute from "./components/ProtectedRoute";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -11,7 +11,7 @@ import Login from "./pages/Login";
 import Classes, {loader as classesLoader} from "./pages/Classes";
 import Search, {loader as searchLoader} from "./pages/Search";
 import SingleClass, {loader as singleClassLoader} from "./pages/SingleClass";
-// import MyComments, {loader as myCommentsLoader} from "./pages/MyComments";
+import MySchedule, {loader as myScheduleLoader} from "./pages/MySchedule";
 
 
 export const router = createBrowserRouter(
@@ -25,16 +25,17 @@ export const router = createBrowserRouter(
 
             <Route path="search" element={<Search />} loader={searchLoader} />
             
-            {/*
-            <Route path="register" element={<Register />} />
-            <Route path="users" 
+            <Route path="mySchedule" 
                 element = {
                     <ProtectedRoute>
-                        <Users />
+                        <MySchedule />
                     </ProtectedRoute>
                 } 
-                loader={usersLoader} 
+                loader={myScheduleLoader} 
             />
+
+            {/*
+            <Route path="register" element={<Register />} />
             <Route path="mycomments" 
                 element = {
                     <ProtectedRoute>

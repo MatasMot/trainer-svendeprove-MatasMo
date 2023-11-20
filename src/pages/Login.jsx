@@ -42,8 +42,8 @@ const Login = () => {
                     })
                 .then(data => {
                     console.log(data);
-                    Cookies.set("token", data.accessToken);
-                    Cookies.set("userId", data.id);
+                    Cookies.set("token", data.token, { sameSite: 'lax' }, { httpOnly: false});
+                    Cookies.set("userId", data.userId, { sameSite: 'lax' }, { httpOnly: false});
                     
                     navigate("/");
                 })

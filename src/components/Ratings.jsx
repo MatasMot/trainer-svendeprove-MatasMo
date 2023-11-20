@@ -2,8 +2,8 @@ import { useLoaderData, Link, useSearchParams } from "react-router-dom";
 
 
 // the loader function runs before the component function is mounted in the browser
-export const loader = async ({params}) => {
-    console.log(params.id)
+export const loader = async (id) => {
+    console.log(id)
     // let url = new URL(request.url)
     // let params = url.searchParams.get("q")
 
@@ -21,12 +21,13 @@ export const loader = async ({params}) => {
 };
 
 
-const Ratings = () => {
+const Ratings = ({id}) => {
+    console.log(id);
     //const [searchParams] = useSearchParams();
     //console.log(searchParams.get("q"));
 
     // variables contains data returned from the loader function
-    let ratings = useLoaderData();
+    let ratings = useLoaderData(id);
     
     /*React uses key prop to identify different elements*/
 

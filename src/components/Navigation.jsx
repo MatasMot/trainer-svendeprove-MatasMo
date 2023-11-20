@@ -34,7 +34,7 @@ const Navigation = () => {
 
                 <Link to="/">Home</Link>
                 <Link to="/classes">Classes</Link>
-                {/*token && (<Link to="/users">Users</Link>)*/}
+                {token && (<Link to="/mySchedule">My Schedule</Link>)}
                 {token ? <button onClick={handleLogout}>Log out</button> : <Link to="/login">Login</Link>}
             </nav>
         </> 

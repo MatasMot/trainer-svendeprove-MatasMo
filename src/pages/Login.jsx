@@ -51,22 +51,32 @@ const Login = () => {
             }}
         >
             {({status}) => (
-                <Form>
-                    <h1>LOGIN PAGE</h1>
-                    <div className="flex gap-4">
-                        <label htmlFor="username">Username:</label>
-                        <Field id="username" name="username" type="text" />
+                <Form className="fixed left-0 top-[6rem]">
+
+                    <h1 className="text-[#F1C40E] font-bold text-[56px] ml-12">Believe Yourself</h1>
+
+                    <div className="flex items-center gap-4">
+                        <div className="bg-[#000000] w-8 h-1 "></div>
+                        <p className="font-bold text-[20px]">Train like a pro</p>
+                    </div>
+
+                    <div className="mt-16">
+                        <p className="text-[18px] font-semibold mx-4 mb-4">Log in with your credentials</p>
+                        <Field className="rounded-full border-2 py-[15px] px-[75px] mx-4" id="username" name="username" type="text" placeholder="Enter your username..."/>
                         <ErrorMessage name="username" component="div" className="text-red-500"/>
                     </div>
-                    <div className="flex gap-4">
-                        <label htmlFor="password">Password:</label>
-                        <Field id="password" name="password" type="password" />
+
+                    <div>
+                        <Field className="rounded-full border-2 py-[15px] px-[75px] mx-4 mt-4" id="password" name="password" type="password" placeholder="Enter your password..."/>
                         <ErrorMessage name="password" component="div" className="text-red-500"/>
                     </div>
+
                     {/*error from API*/}
-                    {status && <p className="text-red-500">{status}</p>}
-                    <button type="submit">Log In!</button>
-                    <div><Link to="/register">Not yet a member? Register here</Link></div>
+                    {status && <p className="font-bold text-red-500">{status}</p>}
+
+                    <button className="color-black bg-[#F1C40E] rounded-full py-[15px] px-[144px] mx-4 mt-4 font-semibold " type="submit">LOG IN</button>
+
+                    {/*<div><Link to="/register">Not yet a member? Register here</Link></div>*/}
                 </Form>
             )}
         </Formik>

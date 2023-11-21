@@ -16,9 +16,7 @@ const Trainer = (trainerId) => {
 
     return ( 
         <>
-            <p>Trainer picture: </p>
-            <img src={trainer?.asset.url} alt={trainer?.trainerName} />
-
+            <img className="w-[88px] h-[88px] object-cover rounded-xl" src={trainer?.asset.url} alt={trainer?.trainerName} />
         </>
     );
 }

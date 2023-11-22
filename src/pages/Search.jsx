@@ -37,53 +37,57 @@ export const loader = async ( { request } ) => {
 };
 
 const Search = () => {
-    //const [searchParams] = useSearchParams();
-    //console.log(searchParams.get("q"));
 
     let classes = useLoaderData();
     console.log(classes);
     
-    /*React uses key prop to identify different elements*/
     return (
         <>
             <div className="fixed left-0 top-[6rem]">
 
                 <SearchBox />
 
-                <h1 className="text-[20px] font-bold ml-4 mt-4">Popular classes</h1>
-                <section className="flex overflow-x-scroll gap-4 scrollbar-hide ml-4 mt-4">
-                    {classes.map(singleClass => (
-                        <Link to={`/class/${singleClass.id}`} className="basis-[128px] grow-0 shrink-0 h-[145px] relative" key={singleClass.id}>
-                            {/* Container div for image and overlay */}
-                            <div>
-                                <img className=" object-cover h-[145px] rounded-xl" src={singleClass.asset.url} alt={singleClass.className} />
-                                {/* Overlay div */}
-                                <div className="overlay absolute bottom-0">
-                                    <div className="rounded-tr-[3rem] rounded-bl-xl bg-[#F1C40E] p-2 w-[110px] h-[80px] relative">
-                                        <div className="absolute bottom-1 left-2">
-                                            <p className="text-[12px] font-bold ">{singleClass.className}</p>
-                                            <Ratings singleClassId={singleClass.id}/>
+                {classes.length === 0 ? 
+                    <p className="text-[20px] font-bold ml-4 mt-4">Your search did not give any results. Try to search for something else...</p> : 
+
+                    <div>
+                        <h1 className="text-[20px] font-bold ml-4 mt-4">Popular classes</h1>
+                        <section className="flex overflow-x-scroll gap-4 scrollbar-hide ml-4 mt-4">
+                            {classes.map(singleClass => (
+                                <Link to={`/class/${singleClass.id}`} className="basis-[128px] grow-0 shrink-0 h-[145px] relative" key={singleClass.id}>
+
+                                    <div>
+                                        <img className=" object-cover h-[145px] rounded-xl" src={singleClass.asset.url} alt={singleClass.className} />
+
+                                        <div className="overlay absolute bottom-0">
+                                            <div className="rounded-tr-[3rem] rounded-bl-xl bg-[#F1C40E] p-2 w-[110px] h-[80px] relative">
+                                                <div className="absolute bottom-1 left-2">
+                                                    <p className="text-[12px] font-bold ">{singleClass.className}</p>
+                                                    <Ratings singleClassId={singleClass.id}/>
+                                                </div>
+                                            </div>
+
                                         </div>
                                     </div>
-                                    {/* Additional overlay content goes here */}
-                                </div>
-                            </div>
-                            {/*<Link to={`/class/${singleClass.id}`}>Read More</Link>*/}
-                        </Link>
-                    ))}
-                </section>
-                
-                <h1 className="text-[20px] font-bold ml-4 mt-4">Popular Trainers</h1>
-                <section className="ml-4 mt-4">
-                        {classes.map(singleClass => (
-                            <article className="mt-4" key={singleClass.id}>
-                                <div className="flex gap-4">
-                                    <Trainer trainerId={singleClass.trainer.id}/>
-                                    <p className="pt-4 font-semibold ">{singleClass.trainer.trainerName}</p>
-                                </div>
-                            </article>
-                        ))}
-                </section>
+
+                                </Link>
+                            ))}
+                        </section>
+                        
+                        <h1 className="text-[20px] font-bold ml-4 mt-4">Popular Trainers</h1>
+                        <section className="ml-4 mt-4">
+                                {classes.map(singleClass => (
+                                    <article className="mt-4" key={singleClass.id}>
+                                        <div className="flex gap-4">
+                                            <Trainer trainerId={singleClass.trainer.id}/>
+                                            <p className="pt-4 font-semibold ">{singleClass.trainer.trainerName}</p>
+                                        </div>
+                                    </article>
+                                ))}
+                        </section>
+                    </div>
+                }
+
             </div>
         </>
     );

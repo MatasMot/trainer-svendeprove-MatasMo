@@ -3,46 +3,38 @@ import { useLoaderData, Link, useNavigate } from "react-router-dom";
 import Trainer from "../components/Trainer"
 import Cookies from "js-cookie";
 import Ratings from "../components/Ratings";
-// import LeaveComment from "../components/LeaveComment";
 
 export const loader = async ({params}) => {
-    // console.log(params)
-    const [singleClass, ratings] = await Promise.all([
+    
+    let token = Cookies.get("token");
+    let userId = Cookies.get("userId");
+
+
+    const [singleClass, schedule] = await Promise.all([
       fetch(`http://localhost:4000/api/v1/classes/${params.id}`).then(res => res.json()),
-      fetch(`http://localhost:4000/api/v1/classes/${params.id}/ratings`).then(res => res.json()),
+      token && fetch(`http://localhost:4000/api/v1/users/${userId}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        }).then(res => res.json())
+
     ]);
   
-    return { singleClass, ratings };
+    return { singleClass, schedule };
 }
 
-/*
-export const loader = async ({params}) => {
-    //console.log(params)
-    try {
-        let response = await fetch(`http://localhost:4000/api/v1/classes/${params.id}`, {
-            // standard method is GET for fetch
-        })
-
-        
-        return await response.json()
-    } catch (error) {
-        return error;
-    }
-};
-*/
 
 const SingleClass = () => {
     let data = useLoaderData();
     console.log(data);
-    //let classId = data.singleClass.id;
-    const navigate = useNavigate();
 
+    const navigate = useNavigate();
+    let token = Cookies.get("token");
     
-    const handleRateClass = async () => {
+    
+    const handleSignUpToClass = async () => {
         let token = Cookies.get("token");
         let userId = Cookies.get("userId");
-
-        console.log("Rate Class");
 
 
         if (token) {
@@ -57,13 +49,13 @@ const SingleClass = () => {
 
                 if (response.ok) {
                     navigate("/mySchedule")
-                    // Request was successful
+
                     console.log('POST request successful');
-                    // Additional actions can be performed here after a successful request
+
                 } else {
-                    // Server returned an error status
+
                     console.error('POST request failed:', response.status);
-                    // You can handle the error or throw an exception
+
                 }
             } catch (error) {
                 console.error('Error during POST request:', error.message);
@@ -72,22 +64,20 @@ const SingleClass = () => {
             console.log("You need to login first");
             navigate("/login")
         }
-
     }
-    
-    
-    const handleSignUpToClass = async () => {
+
+
+    const handleDeleteFromClass = async (classId) => { 
         let token = Cookies.get("token");
         let userId = Cookies.get("userId");
 
-        //console.log(token);
-        //console.log(userId);
-        //console.log(data.singleClass.id);
+
+        console.log(classId);
 
         if (token) {
             try {
-                let response = await fetch(`http://localhost:4000/api/v1/users/${userId}/classes/${data.singleClass.id}`, {
-                    method: "POST",
+                let response = await fetch(`http://localhost:4000/api/v1/users/${userId}/classes/${classId}`, {
+                    method: "DELETE",
                     headers: {
                         Authorization: `Bearer ${token}`,
                     }
@@ -96,13 +86,13 @@ const SingleClass = () => {
 
                 if (response.ok) {
                     navigate("/mySchedule")
-                    // Request was successful
+
                     console.log('POST request successful');
-                    // Additional actions can be performed here after a successful request
+
                 } else {
-                    // Server returned an error status
+
                     console.error('POST request failed:', response.status);
-                    // You can handle the error or throw an exception
+
                 }
             } catch (error) {
                 console.error('Error during POST request:', error.message);
@@ -124,7 +114,7 @@ const SingleClass = () => {
                             <h2 className="font-bold text-[36px] text-[#F1C40E] ml-4">{data.singleClass.className}</h2>
                             <div className="absolute bottom-8 text-[#F1C40E] font-semibold text-[14px] mx-4 flex items-center">
                                 <Ratings singleClassId={data.singleClass.id}/>
-                                <button className="py-2 px-8 border-2 rounded-full border-[#F1C40E] font-semibold text-[#F1C40E] ml-[12rem]" onClick={handleRateClass}>RATE</button>
+                                <button className="py-2 px-8 border-2 rounded-full border-[#F1C40E] font-semibold text-[#F1C40E] ml-[12rem]">RATE</button>
                             </div>
                         </div>
                     </div>
@@ -142,8 +132,18 @@ const SingleClass = () => {
                                 <p className="pt-4 font-semibold ">{data.singleClass.trainer.trainerName}</p>
                             </div>
                         </article>
-
-                        <button className="rounded-full border-[1px] border-[#707070] bg-[#F1C40E] font-semibold text-[14px] py-4 px-8 mx-4 mt-4 w-[334px]" onClick={handleSignUpToClass}>SIGN UP</button>
+                            
+                                <article >
+    
+                                    {
+                                        token && data.schedule.classes.some(singleSchedule => singleSchedule.id === data.singleClass.id) ?
+                                        <button className="rounded-full border-[1px] border-[#707070] bg-[#F1C40E] font-semibold text-[14px] py-4 px-8 mx-4 mt-4 w-[334px]" onClick={() => handleDeleteFromClass(data.singleClass.id)}>LEAVE</button> :
+                                        token && <button className="rounded-full border-[1px] border-[#707070] bg-[#F1C40E] font-semibold text-[14px] py-4 px-8 mx-4 mt-4 w-[334px]" onClick={handleSignUpToClass}>SIGN UP</button>
+                                    }
+    
+                                </article>
+                                
+                    
                     </div>
 
                 </article>

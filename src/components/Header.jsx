@@ -17,7 +17,7 @@ const Header = () => {
     }, [location]);
 
     const handleGoBack = () => {
-        navigate(-1);
+        navigate("/classes");
     };
 
     return ( 

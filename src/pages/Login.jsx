@@ -11,8 +11,6 @@ const Login = () => {
         password: Yup.string().min(4, "Password must be 4 characters long!").required("Password is required!")
     })
 
-{/* initialValues is a prop
-    fetch returns an object that we call as res. Res has properties like .ok and methods like .json()*/}
     return (
         <Formik
             initialValues={{
@@ -39,13 +37,16 @@ const Login = () => {
                     else {
                         return res.json()
                     }
-                    })
+                })
                 .then(data => {
-                    console.log(data);
-                    Cookies.set("token", data.token, { sameSite: 'lax' }, { httpOnly: false});
-                    Cookies.set("userId", data.userId, { sameSite: 'lax' }, { httpOnly: false});
-                    
-                    navigate("/");
+                    if (data) {
+                        console.log(data);
+                        Cookies.set("token", data.token, { sameSite: 'lax' }, { httpOnly: false });
+                        Cookies.set("userId", data.userId, { sameSite: 'lax' }, { httpOnly: false });
+                        navigate("/classes");
+                    } else {
+                        console.error("Unexpected or empty response from the server");
+                    }
                 })
                 console.log(values)
             }}
@@ -76,7 +77,6 @@ const Login = () => {
 
                     <button className="color-black bg-[#F1C40E] rounded-full py-[15px] px-[144px] mx-4 mt-4 font-semibold " type="submit">LOG IN</button>
 
-                    {/*<div><Link to="/register">Not yet a member? Register here</Link></div>*/}
                 </Form>
             )}
         </Formik>

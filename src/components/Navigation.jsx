@@ -28,13 +28,13 @@ const Navigation = () => {
             <nav className={`fixed z-20 top-0 w-full ${isShown ? "left-0 backdrop-blur-sm" : "-left-full"} h-screen bg-white py-32 items-center
                              md:static md:h-auto md:p-4 
                              flex flex-col md:flex-row gap-16
+                             text-[24px]
                              `}>
                 <button onClick={showMenu} className={`fixed ${isShown && "hidden"} top-3 right-4 text-black text-[3rem] md:hidden`}>&equiv;</button>
                 <button onClick={hideMenu} className='absolute top-3 right-4 text-black text-[3rem] md:hidden'>&times;</button>
 
-                <Link to="/">Home</Link>
+                <Link to="/classes">Home</Link>
                 <Link to="/search">Search</Link>
-                <Link to="/classes">Classes</Link>
                 {token && (<Link to="/mySchedule">My Schedule</Link>)}
                 {token ? <button onClick={handleLogout}>Log out</button> : <Link to="/login">Login</Link>}
             </nav>
